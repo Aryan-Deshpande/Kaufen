@@ -1,0 +1,14 @@
+{% extends 'skeleton.html' %}
+
+    {% block content %}
+    <body>
+        <form method="POST">
+            {{ purch.hidden_tag() }}
+            <h2>
+                Are you sure you want to buy {{ item }}?
+            </h2>
+            <input type="hidden" name="purchased_item" id="purchased_item" value="{{ item }}">
+            {{ purch.submit(class="btn btn-outline-success") }}
+        </form>
+    </body>
+    {% endblock %}

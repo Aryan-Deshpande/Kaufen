@@ -1,0 +1,22 @@
+{% extends 'skeleton.html'%}
+
+{% block content%}
+<body class="text-centre">
+
+<div class="container">
+    <form method="POST" class="form-register" style="color:white">
+
+        {{ login.hidden_tag() }}
+        {{ login.username.label() }}
+        {{ login.username(class="form-control") }}
+
+        {{ login.password1.label() }}
+        {{ login.password1() }}
+
+        {{ login.submit() }}
+
+    </form>
+</div>
+
+</body>
+{% endblock %}

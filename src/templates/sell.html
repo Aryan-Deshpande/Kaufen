@@ -1,0 +1,15 @@
+{% extends 'skeleton.html'%}
+    
+    {% block content %}
+    {{ sell.hidden_tag()}}
+    <body>
+        <form method="POST">
+            {{ sell.hidden_tag() }}
+            <h2>
+                Are you sure you want to sell {{ item }}?
+            </h2>
+            <input type="hidden" name="sold_item" id="sold_item" value="{{ item }}">
+            {{ sell.submit(class="btn btn-outline-success") }}
+        </form>
+    </body>
+    {% endblock %}

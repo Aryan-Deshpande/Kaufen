@@ -1,0 +1,54 @@
+{% extends 'skeleton.html'%}
+
+{% block title %}
+kaufen
+{% endblock %}
+
+{% block content %}
+<div class="col-8">
+<table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">ITEM</th>
+      <th scope="col">PRICE</th>
+      <th scope="col">CATEGORY</th>
+      <th scope="col">OPTIONS</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in items%}
+    <tr>
+      <td>{{i.name}}</td>
+      <td>{{i.price}}</td>
+      <td>{{i.category}}</td>
+      <td>
+        <a href="{{ url_for('transact',item=i.name) }}"><button class="btn btn-outline btn-dark">BUY</button></a>
+        <a href="#"><button class="btn btn-outline btn-dark">MORE DETAILS</button></a>
+      </td>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<div class="col-4">
+  <table class="table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">ITEM</th>
+        <th scope="col">PRICE</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in owned%}
+      <tr>
+        <td>{{i.name}}</td>
+        <td>{{i.price}}</td>
+        <td>
+          <a href="{{ url_for('sell',item=i.name) }}"><button class="btn btn-outline btn-dark">SELL</button></a>
+        </td>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
