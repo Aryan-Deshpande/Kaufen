@@ -2,8 +2,9 @@ from email.policy import default
 from enum import unique
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt 
 from flask_login import LoginManager,UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app= Flask(__name__)
 
@@ -42,24 +43,26 @@ class Item(db.Model): # identifier needed to create models
 
 class User(db.Model,UserMixin): #UserMixin adds attributes that flask_login needs (isauth,isactive,.etc)
     id = db.Column(db.Integer(),primary_key=True)
-    name=db.Column(db.String(length=20),nullable=True,unique=True)
-    email=db.Column(db.String(),unique=True,nullable=True)
+    name=db.Column(db.String(length=20),nullable=False,unique=True)
+    email=db.Column(db.String(),unique=True,nullable=False)
     # set default value
-    coins=db.Column(db.Integer(),default=30000,nullable=True)
+    coins=db.Column(db.Integer(),default=30000,nullable=False)
     #hash passw
-    passh=db.Column(db.String(length=60),nullable=True)
+    passh=db.Column(db.String(60),nullable=False)
     sold=db.relationship('Item',backref='owned_used',lazy=True)
 
     @property
     def password(self):
-        return self.password
-    
+        raise AttributeError('password is not a readable attribute')
+
     @password.setter
     def password(self, plain_text_password):
-        self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
+        print(plain_text_password)
+        self.passh = generate_password_hash(plain_text_password)
 
-    def check_pass_corr(self,attempted_pass):
-        return bcrypt.check_password_hash(self.password_hash,attempted_pass)
+    def check_password_correction(self, attempted_password):
+        print(self.passh + "pashh")
+        return check_password_hash(self.passh, attempted_password)
 
     def can_purch(self,obj):
         return self.coins > obj.price

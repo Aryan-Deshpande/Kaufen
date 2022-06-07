@@ -44,12 +44,15 @@ def register_page():                                                # REGISTRATI
 
 
 @app.route('/login/', methods=['GET','POST'])
-def login():
+def login_page():
     login=LoginForm()
     if login.validate_on_submit():
-        usr=User.query.get(login.username.data).first()
-        if usr and usr.check_pass_corr(passw=login.password.data):
-            login_user(usr)                                               # LOGIN_USER , USER OBJECT IS PASSED IN
+        attempted_user=User.query.filter_by(name=login.username.data).first()
+        print(login.password1.data + "route")
+        if attempted_user and attempted_user.check_password_correction(
+                attempted_password=login.password1.data
+        ):
+            login_user(attempted_user)                                               # LOGIN_USER , USER OBJECT IS PASSED IN
             return render_template(url_for(market_page))
         else:
             return 'wrong pass'
