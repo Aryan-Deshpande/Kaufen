@@ -5,8 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt 
 from flask_login import LoginManager,UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+import stripe
 
 app= Flask(__name__)
+
+connection_token = stripe.terminal.ConnectionToken.create()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
 app.config['SECRET_KEY'] = 'not very secret now'

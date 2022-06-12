@@ -6,6 +6,7 @@ from src.forms import RegisterForm
 from src import db
 from src.forms import LoginForm,Purch,Sell
 from flask_login import login_required, login_user, current_user,logout_user
+from flask import jsonify
 
 @loginmanager.user_loader # this here is a callback
 def load_user(user_id):                                 # FUNCTION THAT TAKES A USER ID, TO ASSOCIATE WITH SESSION ID
@@ -87,6 +88,13 @@ def sell(item):
                 item_upd.sell(current_user)                                            # UPDATES USER DET
                 return redirect(url_for('market_page'))
     return render_template('sell.html',item=item,sell=sell_form)
+
+@app.route('/connection_token', methods=['GET','POST'])
+def stripes():
+    if request.method == 'POST':
+        pass
+
+    return jsonify(secret=token.secret)
 
 @app.route('/logout',methods=['GET','POST'])
 def logout():
