@@ -1,5 +1,4 @@
-from crypt import methods
-from curses import meta
+
 from src import app,loginmanager
 from flask import redirect, render_template, request, url_for
 from src import Item,User
@@ -18,7 +17,8 @@ def home_page():
 
 @login_required
 @app.route('/market/')
-def market_page():                                              # API TO RENDER DETIALS FOR ITEMS OWNED && NOT OWNED
+def market_page():                
+                              # API TO RENDER DETIALS FOR ITEMS OWNED && NOT OWNED
     items = Item.query.filter_by(owner=None)                    # FILTERED ITEMS NOT OWNED BY USER
     owned = Item.query.filter_by(owner=current_user.id)         # FILTERED ITEMS OWNED BY USER
     #items = [{"name":"Watch","price":2000,"category":"Accessories"},{"name":"Football","price":344,"category":"Sports"},{"name":"GODOFWAR","price":12,"category":"VideoGame"}]
