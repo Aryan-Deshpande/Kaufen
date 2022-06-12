@@ -13,6 +13,9 @@ connection_token = stripe.terminal.ConnectionToken.create()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
 app.config['SECRET_KEY'] = 'not very secret now'
+app.config['STRIPE_SECRET_KEY'] = 'sk_test_tR3PYbcVNZZ796tH88S4VQ2u'
+
+stripe.api_key = app.config['STRIPES_SECRET_KEY']
 
 db = SQLAlchemy(app)
 
