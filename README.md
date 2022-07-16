@@ -3,4 +3,5 @@ Kaufen - is a Market /Trading Place where users can buy and sell items according
 
 Created Service, Deployment, Ingress and Dockerfile make the app production ready to be run on Cloud Service Kubernetes Engines, eg: Azure's Kubernetes Service
 
-( Future Additions a Stripe extension to Add fund to thy account ) 
+Future Additions : - add a Stripe extension to Add fund to thy account  
+                   - search options to filter product groups / owners
