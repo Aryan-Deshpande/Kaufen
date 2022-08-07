@@ -7,8 +7,6 @@ from flask_login import LoginManager,UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
-#import stripe
-
 app= Flask(__name__)
 
 CORS(app)
@@ -26,9 +24,9 @@ class Item(db.Model): # identifier needed to create models
     id = db.Column(db.Integer(),primary_key=True)
     name = db.Column(db.String(length=30), nullable=False, unique=True)
     price = db.Column(db.Integer(),nullable=False)
-    category = db.Column(db.String(length=20),nullable=False,unique=True)
+    category = db.Column(db.String(length=20),nullable=False)
     description = db.Column(db.String(length=120),nullable=False,unique=True)
-    barcode = db.Column(db.String(length=12),nullable=False,unique=True)
+    #barcode = db.Column(db.String(length=12),nullable=False,unique=True) Later Implementation
     owner = db.Column(db.Integer(), db.ForeignKey('user.id') )
 
 
