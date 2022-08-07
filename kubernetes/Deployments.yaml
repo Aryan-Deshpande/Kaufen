@@ -1,0 +1,29 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: kaufen-api
+  labels:
+    app: kaufen-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kaufen-api
+  template:
+    metadata:
+      labels:
+        app: kaufen-api
+    spec:
+      containers:
+      - name: kaufen-api
+        image: test:latest
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        resource:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi

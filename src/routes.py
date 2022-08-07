@@ -19,11 +19,16 @@ def home_page():
 @login_required
 @app.route('/market/')
 def market_page():                
-                              # API TO RENDER DETIALS FOR ITEMS OWNED && NOT OWNED
-    items = Item.query.filter_by(owner=None)                    # FILTERED ITEMS NOT OWNED BY USER
-    owned = Item.query.filter_by(owner=current_user.id)         # FILTERED ITEMS OWNED BY USER
-    #items = [{"name":"Watch","price":2000,"category":"Accessories"},{"name":"Football","price":344,"category":"Sports"},{"name":"GODOFWAR","price":12,"category":"VideoGame"}]
-    return render_template('market.html',items=items,owned=owned)
+
+    # API TO RENDER DETIALS FOR ITEMS OWNED && NOT OWNED
+    if current_user.is_authenticated:
+        items = Item.query.filter_by(owner=None)                    # FILTERED ITEMS NOT OWNED BY USER
+        owned = Item.query.filter_by(owner=current_user.id)         # FILTERED ITEMS OWNED BY USER
+                                                            #items = [{"name":"Watch","price":2000,"category":"Accessories"},{"name":"Football","price":344,"category":"Sports"},{"name":"GODOFWAR","price":12,"category":"VideoGame"}]
+        return render_template('market.html',items=items,owned=owned)
+    else:
+        items = Item.query.filter_by(owner=None)
+        return render_template('market.html',items=items)
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register_page():                                                # REGISTRATION FORM #
@@ -38,7 +43,7 @@ def register_page():                                                # REGISTRATI
             login_user(user_to_create)                              # LOGGING IN USER DIRECTLY,  WITH THE USER OBJECT
             return redirect(url_for('market_page'))
             
-        if form.errors != {}: #If there are not errors from the validations
+        if form.errors != {}:                                       #If there are not errors from the validations
             for err_msg in form.errors.values():
                 print(f'There was an error with creating a user: {err_msg}')
     return render_template('register.html',form=form)
@@ -64,9 +69,10 @@ def login_page():
 @app.route('/transaction/<string:item>/',methods=['GET','POST'])
 
 def transact(item):
-    purch=Purch()                                                   # FORM CREATED FOR PURCHASE #
+    purch=Purch()                                     # FORM CREATED FOR PURCHASE #
+
     if purch.validate_on_submit(): #purch.validate_on_submit() here is important because it is used for additional vaidation
-                                                                 # behind the scenes. ( ) # request.method == 'POST' is normal
+                                   # behind the scenes. ( ) # request.method == 'POST' is normal
         print(request.form.get('purchased_item'))
         
         item_upd = Item.query.filter_by(name=request.form.get('purchased_item')).first()   # CHECKS IF ITEM OBJECT EXISTS FOR NAME
@@ -89,12 +95,6 @@ def sell(item):
                 return redirect(url_for('market_page'))
     return render_template('sell.html',item=item,sell=sell_form)
 
-@app.route('/connection_token', methods=['GET','POST'])
-def stripes():
-    if request.method == 'POST':
-        pass
-
-    return jsonify(secret=token.secret)
 
 @app.route('/logout',methods=['GET','POST'])
 def logout():

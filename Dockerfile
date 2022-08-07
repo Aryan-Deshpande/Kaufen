@@ -1,18 +1,11 @@
-FROM alpine:latest
-FROM python:3.10
+FROM python:3.10-slim
 
 WORKDIR /app
 
-# copying requirement.txt file to the container
-COPY './requirements.txt' .
+COPY . .
 
-# install the package mentioned in requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . . 
+COPY . /app 
 
-EXPOSE 5000
-
-ENTRYPOINT ["python", "estart.py"]
-
-
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "estart:app"]

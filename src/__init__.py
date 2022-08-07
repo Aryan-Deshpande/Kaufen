@@ -5,17 +5,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt 
 from flask_login import LoginManager,UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-import stripe
+from flask_cors import CORS
+
+#import stripe
 
 app= Flask(__name__)
 
-connection_token = stripe.terminal.ConnectionToken.create()
+CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db' # change to postgr
 app.config['SECRET_KEY'] = 'not very secret now'
-app.config['STRIPE_SECRET_KEY'] = 'sk_test_tR3PYbcVNZZ796tH88S4VQ2u'
-
-stripe.api_key = app.config['STRIPES_SECRET_KEY']
 
 db = SQLAlchemy(app)
 

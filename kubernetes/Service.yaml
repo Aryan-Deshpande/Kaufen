@@ -1,0 +1,10 @@
+apiVersion: app/v1
+kind: Service
+metadata:
+  name: kaufen-api
+spec:
+  ports:
+  - port: 50
+    targetPort: 5000
+  selector:
+    app: kaufen-api
