@@ -9,7 +9,7 @@
 
 ## **Install this on your machine ?**
 
-### **First clone the repo**
+### **First clone the repository**
 ```sh
 # go to the directory you want
 git clone https://github.com/Aryan-Deshpande/Kaufen.git
